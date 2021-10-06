@@ -1,0 +1,36 @@
+version: 0.1
+component: build                    
+timeoutInSeconds: 10000             
+runAs: root                         
+shell: bash                        
+env:
+  # the value of a vaultVariable is the secret-id (in OCI ID format) stored in the OCI Vault service
+  # you can then access the value of that secret in your build_spec.yaml commands
+  vaultVariables:
+    OCIR_DOCKER_PWD: "YOUR-SECRET-OCID"
+    OCIR_DOCKER_USER: "YOUR-SECRET-OCID"
+
+   
+steps:
+  - type: Command                   
+    name: "Login to OCIR"  
+    shell: bash                    
+    timeoutInSeconds: 60           
+    runAs: root          
+    command: |
+    # do docker login
+      echo ${OCIR_DOCKER_PWD} | docker login iad.ocir.io -u ${OCIR_DOCKER_USER} --password-stdin
+    
+  - type: Command
+    name: "Test Docker Push to private OCIR repo"
+    command: |
+      docker pull nginx
+      # replace <YOUR-TENANCY-NAMESPACE>/<YOUR-REPO-PATH> with your actual values
+      docker tag nginx:latest iad.ocir.io/<YOUR-TENANCY-NAMESPACE>/<YOUR-REPO-PATH>/nginx:latest
+      docker push iad.ocir.io/<YOUR-TENANCY-NAMESPACE>/<YOUR-REPO-PATH>/nginx:latest
+    onFailure:
+      - type: Command
+        command: |
+          echo "Failured docker push"
+        timeoutInSeconds: 60
+        runAs: root
