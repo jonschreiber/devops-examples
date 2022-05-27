@@ -18,7 +18,7 @@ steps:
     timeoutInSeconds: 60           
     runAs: root          
     command: |
-    # do docker login
+      # do docker login
       echo ${OCIR_DOCKER_PWD} | docker login iad.ocir.io -u ${OCIR_DOCKER_USER} --password-stdin
     
   - type: Command
