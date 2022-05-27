@@ -21,8 +21,15 @@ steps:
       # install via python pip
       python3 -m pip install Flask
 
+steps:
+  - type: Command                   
+    name: "Test install with pip"  
+    shell: bash                    
+    timeoutInSeconds: 60           
+    runAs: root          
+    command: |
       # install missing pip
-      yes | yum install python34-setuptools
+      yum install -y --enablerepo ol7_optional_latest python3-devel
       easy_install pip
 
       #view package repos
