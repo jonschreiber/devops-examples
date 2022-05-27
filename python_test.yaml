@@ -21,7 +21,6 @@ steps:
       # install via python pip
       python3 -m pip install Flask
 
-steps:
   - type: Command                   
     name: "Test install with pip"  
     shell: bash                    
