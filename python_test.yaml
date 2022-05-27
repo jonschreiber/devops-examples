@@ -18,13 +18,17 @@ steps:
       # use local build runner python
       python3 --version
       
-      # install pip
+      # install via python pip
       python3 -m pip install Flask
 
+      # install missing pip
+      yes | yum install python34-setuptools
+      easy_install pip
+
       #view package repos
-      # pip3 config list -v
+      pip config list -v
 
       # install requirements
-      # pip install requirements.txt
+      pip install requirements.txt
 
       
