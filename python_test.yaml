@@ -15,26 +15,22 @@ steps:
     timeoutInSeconds: 60           
     runAs: root          
     command: |
-      # use local build runner python
+      # use local build runner python, ensure < 3.4
       python3 --version
       
+      # setup pip
+      python -m ensurepip --default-pip
+
       # install via python pip
-      python3 -m pip install Flask
+      python3 -m pip install -r requirements.txt
 
   - type: Command                   
-    name: "Test install with pip"  
+    name: "view package repos"  
     shell: bash                    
     timeoutInSeconds: 60           
     runAs: root          
     command: |
-      # install missing pip
-      yum install -y --enablerepo ol7_optional_latest python3-devel
-      easy_install pip
-
       #view package repos
-      pip config list -v
-
-      # install requirements
-      pip install requirements.txt
+      python3 -m pip config list -v
 
       
