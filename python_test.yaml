@@ -19,12 +19,12 @@ steps:
       python3 --version
       
       # install pip
-      python3 -m pip
+      python3 -m pip install Flask
 
       #view package repos
-      pip config list -v
-      
+      # pip3 config list -v
+
       # install requirements
-      pip install requirements.txt
+      # pip install requirements.txt
 
       
